@@ -15,6 +15,10 @@
                class="transition duration-200 {{ request()->routeIs('about') ? 'text-yellow-300 font-bold' : 'hover:text-blue-200' }}">
                 About
             </a>
+
+            <a href="{{ route('profile') }}" class="{{ request()->routeIs('profile') ? 'text-yellow-300' : '' }}">
+                Profile
+            </a>
         </div>
     </div>
 </nav>

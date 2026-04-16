@@ -40,4 +40,20 @@ class HomeController extends Controller
             ]
         ]);
     }
+
+    public function profile(): View
+    {
+        $user = [
+            'name' => 'Haiqal Aly',
+            'id_number' => '2410050',
+            'email' => '2410050@antarbangsa.ac.id',
+            'github' => 'github.com/HalveExample',
+            'major' => 'Teknik Informatika',
+            'semester' => 4,
+            'status' => 'Aktif',
+            'avatar_url' => 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiWVPFrCTsmAXmispNJpm9PCmkiJhdz_aR6ixbi9pcpLVXuPL_3LaK0To4EMhdPQScgik52ysU6fmkmw5y-zBCfRWGGfmyvvBFyYreF_sfKiVCLw2vJmJBgo1vZ-uvDOM&s=10&ec=121630504'
+        ];
+
+        return view('pages.profile', compact('user'));
+    }
 }

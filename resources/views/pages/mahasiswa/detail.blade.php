@@ -47,7 +47,7 @@
                 </div>
                 <div class="flex pb-3 border-b border-gray-50">
                     <span class="text-gray-500 w-36 font-medium">Jurusan</span>
-                    <span class="text-gray-900 font-semibold">: {{ $mahasiswa->jurusan }}</span>
+                    <span class="text-gray-900 font-semibold">: {{ $mahasiswa->jurusan->nama_jurusan ?? '-' }} ({{ $mahasiswa->jurusan->kode_jurusan ?? '-' }})</span>
                 </div>
                 <div class="flex pb-3 border-b border-gray-50">
                     <span class="text-gray-500 w-36 font-medium">No Kartu (KTM)</span>

@@ -61,16 +61,19 @@
 
                     <div>
                         <label class="block text-sm font-bold text-gray-700 uppercase tracking-wider mb-2">Jurusan</label>
-                        <select name="jurusan"
-                                class="w-full px-4 py-2 border @error('jurusan') border-red-400 focus:ring-red-100 @else border-gray-200 focus:ring-blue-100 focus:border-blue-500 @enderror rounded-lg focus:outline-none focus:ring-2 transition text-gray-800 bg-white">
-                            <option value="">-- Pilih Jurusan --</option>
-                            <option value="Teknik Informatika" {{ old('jurusan') == 'Teknik Informatika' ? 'selected' : '' }}>Teknik Informatika</option>
-                            <option value="Sistem Informasi" {{ old('jurusan') == 'Sistem Informasi' ? 'selected' : '' }}>Sistem Informasi</option>
-                            <option value="Sains Data" {{ old('jurusan') == 'Sains Data' ? 'selected' : '' }}>Sains Data</option>
-                        </select>
-                        @error('jurusan')
-                            <p class="text-xs text-red-500 mt-1 font-medium">{{ $message }}</p>
-                        @enderror
+                        <select name="jurusan_id"
+                                    class="w-full px-4 py-2 border @error('jurusan_id') border-red-400 focus:ring-red-100 @else border-gray-200 focus:ring-blue-100 focus:border-blue-500 @enderror rounded-lg focus:outline-none focus:ring-2 transition text-gray-800 bg-white">
+                                <option value="">-- Pilih Jurusan --</option>
+
+                                <!-- 2. Ganti value menjadi ID Angka (1, 2, 3) sesuai database yang sudah di-seed -->
+                                <option value="1" {{ old('jurusan_id') == '1' ? 'selected' : '' }}>Teknik Informatika (TI)</option>
+                                <option value="2" {{ old('jurusan_id') == '2' ? 'selected' : '' }}>Sistem Informasi (SI)</option>
+                                <option value="3" {{ old('jurusan_id') == '3' ? 'selected' : '' }}>Manajemen Informatika (MI)</option>
+                            </select>
+
+                            @error('jurusan_id')
+                                <p class="text-xs text-red-500 mt-1 font-medium">{{ $message }}</p>
+                            @enderror
                     </div>
 
                     <div>

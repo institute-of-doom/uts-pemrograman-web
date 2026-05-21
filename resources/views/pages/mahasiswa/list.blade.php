@@ -87,7 +87,8 @@
                                 <!-- Poin 2: Eager loading Jurusan -->
                                 <td class="px-6 py-4">
                                     <span class="inline-flex px-2.5 py-1 rounded-md text-xs font-medium bg-blue-50 text-blue-800 border border-blue-100">
-                                        {{ $mahasiswa->jurusan->nama_jurusan ?? $mahasiswa->jurusan }}
+                                        <!-- Memanggil nama_jurusan dari relasi Eloquent jurusan -->
+                                        {{ $mahasiswa->jurusan->nama_jurusan ?? 'Tidak Diketahui' }}
                                     </span>
                                 </td>
                                 <!-- Poin 2: Eager loading No Kartu -->

@@ -7,14 +7,26 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
+        // Buat tabel jurusans dulu
+        Schema::create("jurusans", function (Blueprint $table) {
+            $table->id();
+            $table->string("kode_jurusan")->unique(); // TI, SI, MI
+            $table->string("nama_jurusan");
+            $table->timestamps();
+        });
+
+        // Baru buat tabel mahasiswas yang nempel ke jurusans
         Schema::create("mahasiswas", function (Blueprint $table) {
             $table->id();
-            $table->string("nim")->unique(); // Sesuai ketentuan: NIM unik
-            $table->string("nama"); // Sesuai ketentuan: Nama wajib
-            $table->string("email")->unique(); // Sesuai ketentuan: Email unik
-            $table->string("jurusan"); // Sesuai ketentuan: Jurusan wajib
-            $table->enum("jenis_kelamin", ["L", "P"]); // Sesuai ketentuan: L atau P
-            $table->text("alamat"); // Sesuai ketentuan: Alamat
+            $table->string("nim")->unique();
+            $table->string("nama");
+            $table->string("email")->unique();
+            $table->enum("jenis_kelamin", ["L", "P"]);
+            $table->text("alamat");
+            $table
+                ->foreignId("jurusan_id")
+                ->constrained("jurusans")
+                ->onDelete("cascade");
             $table->timestamps();
         });
     }
@@ -22,5 +34,6 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::dropIfExists("mahasiswas");
+        Schema::dropIfExists("jurusans");
     }
 };

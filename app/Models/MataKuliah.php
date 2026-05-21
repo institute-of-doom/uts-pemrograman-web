@@ -6,18 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class MataKuliah extends Model
 {
-    // Jika nama tabel di database kamu bukan 'mata_kuliahs', set nama tabelnya di sini:
-    protected $table = "mata_kuliahs";
+    protected $fillable = ["kode_matkul", "nama_matkul", "sks"];
 
-    protected $fillable = ["nama_matkul", "kode_matkul"];
-
-    public function mahasiswa()
+    // 5.4: MataKuliah belongsToMany Mahasiswa melalui tabel nilais
+    public function mahasiswas()
     {
         return $this->belongsToMany(
             Mahasiswa::class,
-            "mahasiswa_matakuliah",
+            "nilais",
             "matakuliah_id",
             "mahasiswa_id",
-        )->withPivot("nilai");
+        )
+            ->withPivot("nilai")
+            ->withTimestamps();
     }
 }

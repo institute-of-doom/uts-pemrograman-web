@@ -10,10 +10,15 @@ class Mahasiswa extends Model
         "nim",
         "nama",
         "email",
-        "jurusan",
+        "jurusan_id",
         "jenis_kelamin",
         "alamat",
     ];
+
+    public function jurusan()
+    {
+        return $this->belongsTo(Jurusan::class, "jurusan_id");
+    }
 
     // Relasi ke Kartu Mahasiswa (One to One)
     public function kartuMahasiswa()
@@ -23,14 +28,18 @@ class Mahasiswa extends Model
     }
 
     // Relasi ke Mata Kuliah (Many to Many)
+    // Di dalam file app/Models/Mahasiswa.php
+
     public function mataKuliah()
     {
-        // Sesuaikan 'App\Models\MataKuliah' dengan nama class model mata kuliah kamu
+        // Pastikan parameter kedua eksplisit menyebut tabel 'nilais'
         return $this->belongsToMany(
             MataKuliah::class,
-            "mahasiswa_matakuliah",
+            "nilais",
             "mahasiswa_id",
             "matakuliah_id",
-        )->withPivot("nilai"); // Agar nilai di tabel pivot bisa ikut terpanggil
+        )
+            ->withPivot("nilai")
+            ->withTimestamps();
     }
 }

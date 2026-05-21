@@ -18,7 +18,8 @@ class MahasiswaController extends Controller
     {
         $validated = $request->validate(
             [
-                "jurusan" => "required",
+                // 1. Ubah "jurusan" menjadi "jurusan_id" agar sinkron dengan file Blade
+                "jurusan_id" => "required|exists:jurusans,id",
                 "nim" => "required|numeric|unique:mahasiswas,nim",
                 "nama" => "required|string|max:255",
                 "email" => "required|email|unique:mahasiswas,email",
@@ -31,10 +32,12 @@ class MahasiswaController extends Controller
             ],
         );
 
+        // 2. Menyimpan data yang sudah tervalidasi (sudah mengandung jurusan_id)
         \App\Models\Mahasiswa::create($validated);
 
+        // 3. Poin 3.4: Redirect ke list mahasiswa dan tampilkan pesan sukses
         return redirect()
-            ->route("home")
+            ->route("mahasiswa.list")
             ->with(
                 "success",
                 "Data mahasiswa " .
@@ -47,18 +50,14 @@ class MahasiswaController extends Controller
     {
         $filterJurusan = $request->query("jurusan");
 
-        // Eager loading relasi yang ada
-        $query = Mahasiswa::with(["kartuMahasiswa", "mataKuliah"]);
+        // 2.2 & 5.5: Eager loading menggunakan dengan with() ke semua relasi yang diminta soal
+        $query = Mahasiswa::with(["jurusan", "kartuMahasiswa", "mataKuliah"]);
 
-        // Logika filter jurusan
+        // 2.4 & 5.5: Filter menggunakan kondisional whereHas() menembus ke tabel jurusans
         if ($filterJurusan) {
-            if ($filterJurusan == "TI") {
-                $query->where("jurusan", "LIKE", "%Teknik Informatika%");
-            } elseif ($filterJurusan == "SI") {
-                $query->where("jurusan", "LIKE", "%Sistem Informasi%");
-            } elseif ($filterJurusan == "MI") {
-                $query->where("jurusan", "LIKE", "%Manajemen Informatika%");
-            }
+            $query->whereHas("jurusan", function ($q) use ($filterJurusan) {
+                $q->where("kode_jurusan", $filterJurusan);
+            });
         }
 
         $mahasiswas = $query->get();

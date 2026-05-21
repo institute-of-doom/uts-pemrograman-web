@@ -13,3 +13,9 @@ Route::get("/mahasiswa/form", [MahasiswaController::class, "form"])->name(
 Route::post("/mahasiswa/proses", [MahasiswaController::class, "proses"])->name(
     "mahasiswa.proses",
 );
+Route::get("/mahasiswa/list", [MahasiswaController::class, "list"])->name(
+    "mahasiswa.list",
+);
+Route::get("/mahasiswa/{id}", [MahasiswaController::class, "detail"])->name(
+    "mahasiswa.detail",
+);

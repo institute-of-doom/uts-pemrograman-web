@@ -22,6 +22,12 @@
             <a href="{{ route('mahasiswa.form') }}" class="{{ request()->routeIs('mahasiswa.form') ? 'text-yellow-300' : '' }}">
                 Form Mahasiswa
             </a>
+            <a href="{{ route('mahasiswa.list') }}" class="{{ request()->routeIs('mahasiswa.list') ? 'text-yellow-300' : '' }}">
+                Daftar Mahasiswa
+            </a>
+            <a href="{{ route('mahasiswa.statistik') }}" class="{{ request()->routeIs('mahasiswa.statistik') ? 'text-yellow-300' : '' }}">
+                Statistik
+            </a>
         </div>
     </div>
 </nav>

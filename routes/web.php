@@ -19,3 +19,7 @@ Route::get("/mahasiswa/list", [MahasiswaController::class, "list"])->name(
 Route::get("/mahasiswa/{id}", [MahasiswaController::class, "detail"])->name(
     "mahasiswa.detail",
 );
+Route::get("/statistik-jurusan", [
+    MahasiswaController::class,
+    "statistik",
+])->name("mahasiswa.statistik");

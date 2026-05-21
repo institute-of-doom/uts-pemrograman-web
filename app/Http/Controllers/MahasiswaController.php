@@ -76,4 +76,13 @@ class MahasiswaController extends Controller
         // Mengembalikan ke halaman view detail (kita akan buat view-nya setelah ini)
         return view("pages.mahasiswa.detail", compact("mahasiswa"));
     }
+
+    public function statistik(): \Illuminate\View\View
+    {
+        // Poin 2: Menggunakan withCount untuk menghitung jumlah mahasiswa per jurusan secara otomatis
+        // Laravel akan otomatis menambahkan atribut 'mahasiswas_count' pada tiap objek jurusan
+        $jurusans = \App\Models\Jurusan::withCount("mahasiswas")->get();
+
+        return view("pages.mahasiswa.statistik", compact("jurusans"));
+    }
 }

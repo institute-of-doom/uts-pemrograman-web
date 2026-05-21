@@ -51,6 +51,10 @@
                class="px-4 py-2 text-sm font-semibold rounded-lg border transition {{ request('jurusan') == 'MI' ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50' }}">
                 MI
             </a>
+            <a href="{{ route('mahasiswa.statistik') }}"
+               class="px-4 py-2 text-sm font-semibold rounded-lg border">
+                STATISTIK
+            </a>
         </div>
 
         <div class="bg-white rounded-xl border border-gray-100 shadow-md overflow-hidden">

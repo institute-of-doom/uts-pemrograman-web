@@ -3,6 +3,12 @@
         {{ $pageTitle }}
     </x-slot:title>
 
+    @if (session('success'))
+        <div class="mb-6 p-4 bg-green-50 border-l-4 border-green-500 rounded-r-xl text-sm text-green-700 font-bold shadow-sm animate-fade-in">
+            {{ session('success') }}
+        </div>
+    @endif
+
     <div class="border-b pb-4 mb-6">
         <h2 class="text-3xl font-extrabold text-blue-700">{{ $courseInfo['subject'] }}</h2>
         <p class="text-gray-600 italic">{{ $courseInfo['campus'] }}</p>

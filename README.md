@@ -35,6 +35,9 @@ cd uts-pemrograman-web
 # 2. Copy environment file
 cp .env.example .env
 
+# 3. Composer install
+composer install # or docker run --rm -v .:/app -w /app composer install
+
 # 3. Start containers
 just up
 

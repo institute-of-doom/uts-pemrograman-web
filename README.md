@@ -1,15 +1,15 @@
 # LaraLearn Academic
 
-A simple academic dashboard web application built as a course project for **Pemrograman Web Lanjut II** (Advanced Web Programming) at STMIK Antar Bangsa. It demonstrates Laravel's MVC architecture, Blade templating, and modern frontend tooling.
+A simple academic dashboard web application built as a course project for **Pemrograman Web Lanjut** (Advanced Web Programming) at STMIK Antar Bangsa. It demonstrates Laravel's MVC architecture, Blade templating, and modern frontend tooling.
 
 ## Stack
 
 | Layer     | Technology                        |
 |-----------|-----------------------------------|
-| Backend   | PHP 8.3, Laravel 13               |
+| Backend   | PHP 8.4, Laravel 13               |
 | Frontend  | Blade, Tailwind CSS 4, Vite 8     |
-| Database  | MySQL 8.4                         |
-| Dev Env   | Laravel Sail (Docker)             |
+| Database  | Sqlite                         |
+| Dev Env   | Docker             |
 | Task Runner | Just                            |
 
 ## Pages
@@ -29,18 +29,14 @@ A simple academic dashboard web application built as a course project for **Pemr
 
 ```bash
 # 1. Clone the repo
-git clone https://gitlab.com/nyfelle-school/akademik-app.git
-cd akademik-app
+git clone https://github.com/Isvane/uts-pemrograman-web.git
+cd uts-pemrograman-web
 
 # 2. Copy environment file
 cp .env.example .env
 
-# 3. Install PHP dependencies (host machine, one-time bootstrap)
-composer install
-
-# 4. Start containers
+# 3. Start containers
 just up
-# or: ./vendor/bin/sail up -d
 
 # 5. Generate app key & run migrations
 just artisan key:generate
@@ -50,6 +46,7 @@ just migrate
 just install
 just dev
 ```
+
 ## Common Commands
 
 ```

@@ -6,7 +6,6 @@ use App\Http\Controllers\MahasiswaController;
 
 Route::get("/", [HomeController::class, "index"])->name("home");
 Route::get("/about", [HomeController::class, "about"])->name("about");
-Route::get("/profile", [HomeController::class, "profile"])->name("profile");
 Route::get("/mahasiswa/form", [MahasiswaController::class, "form"])->name(
     "mahasiswa.form",
 );

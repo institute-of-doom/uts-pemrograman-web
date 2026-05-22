@@ -1,4 +1,4 @@
-# LaraLearn Academic
+# UTS Pemrograman Web
 
 A simple academic dashboard web application built as a course project for **Pemrograman Web Lanjut** (Advanced Web Programming) at STMIK Antar Bangsa. It demonstrates Laravel's MVC architecture, Blade templating, and modern frontend tooling.
 
@@ -11,12 +11,6 @@ A simple academic dashboard web application built as a course project for **Pemr
 | Database  | Sqlite                         |
 | Dev Env   | Docker             |
 | Task Runner | Just                            |
-
-## Pages
-
-- `/` — Course dashboard (subject info & syllabus)
-- `/about` — App metadata (name, version, author)
-- `/profile` — Student profile page
 
 ## Setup
 
@@ -39,14 +33,14 @@ cp .env.example .env
 composer install # or docker run --rm -v .:/app -w /app composer install
 
 # 3. Start containers
-just up
+just up # or docker compose up -d
 
 # 5. Generate app key & run migrations
-just artisan key:generate
+just artisan key:generate # you can use the normal php artisan command instead.
 just migrate
 
 # 6. Install JS dependencies & start Vite
-just install
+just install # you can use the normal npm command instead.
 just dev
 ```
 

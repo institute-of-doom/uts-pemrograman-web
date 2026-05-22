@@ -23,3 +23,11 @@ Route::get("/statistik-jurusan", [
     MahasiswaController::class,
     "statistik",
 ])->name("mahasiswa.statistik");
+Route::post("/mahasiswa/detail/{id}/generate-kartu", [
+    App\Http\Controllers\MahasiswaController::class,
+    "generateKartu",
+])->name("mahasiswa.generate_kartu");
+Route::post("/mahasiswa/detail/{id}/add-nilai", [
+    App\Http\Controllers\MahasiswaController::class,
+    "addNilai",
+])->name("mahasiswa.add_nilai");

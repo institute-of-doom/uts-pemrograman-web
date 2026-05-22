@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Mahasiswa;
+use App\Models\KartuMahasiswa;
 
 class MahasiswaController extends Controller
 {
@@ -67,14 +68,19 @@ class MahasiswaController extends Controller
 
     public function detail($id)
     {
-        // Mengambil data mahasiswa beserta kartu dan mata kuliahnya berdasarkan ID
         $mahasiswa = Mahasiswa::with([
+            "jurusan",
             "kartuMahasiswa",
             "mataKuliah",
         ])->findOrFail($id);
 
-        // Mengembalikan ke halaman view detail (kita akan buat view-nya setelah ini)
-        return view("pages.mahasiswa.detail", compact("mahasiswa"));
+        // Ambil langsung dari nama tabel database Anda (mata_kuliahs) untuk menjamin data keluar
+        $allMataKuliah = \DB::table("mata_kuliahs")->get();
+
+        return view(
+            "pages.mahasiswa.detail",
+            compact("mahasiswa", "allMataKuliah"),
+        );
     }
 
     public function statistik(): \Illuminate\View\View
@@ -84,5 +90,69 @@ class MahasiswaController extends Controller
         $jurusans = \App\Models\Jurusan::withCount("mahasiswas")->get();
 
         return view("pages.mahasiswa.statistik", compact("jurusans"));
+    }
+
+    public function generateKartu($id): \Illuminate\Http\RedirectResponse
+    {
+        // Cari data mahasiswa, pastikan datanya ada
+        $mahasiswa = Mahasiswa::findOrFail($id);
+
+        // Ambil tanggal hari ini menggunakan penanggalan Carbon bawaan Laravel
+        $tanggalTerbit = now(); // Format otomatis YYYY-MM-DD
+        $tanggalBerlaku = now()->addYears(4); // Poin 9: Otomatis 4 tahun ke depan
+
+        // Poin 7 & 8: Buat record baru melalui relasi hasOne Eloquent
+        $mahasiswa->kartuMahasiswa()->create([
+            "no_kartu" => "KTM-" . $mahasiswa->nim, // Poin 8: Format KTM-{NIM}
+            "tanggal_terbit" => $tanggalTerbit,
+            "tanggal_berlaku" => $tanggalBerlaku,
+        ]);
+
+        // Poin 10: Kembali ke halaman detail dengan membawa pesan sukses
+        return redirect()
+            ->route("mahasiswa.detail", $id)
+            ->with(
+                "success",
+                "Kartu Tanda Mahasiswa (KTM) berhasil digenerate!",
+            );
+    }
+
+    public function addNilai(
+        Request $request,
+        $id,
+    ): \Illuminate\Http\RedirectResponse {
+        $mahasiswa = Mahasiswa::findOrFail($id);
+
+        // Poin 12 & 14: Validasi input dan CEGAH DUPLIKASI mata kuliah yang sama untuk mahasiswa yang sama
+        $request->validate(
+            [
+                "matakuliah_id" => [
+                    "required",
+                    "exists:mata_kuliahs,id",
+                    // Aturan kustom untuk mencegah mahasiswa mengambil matkul yang sama dua kali di tabel nilais
+                    \Illuminate\Validation\Rule::unique(
+                        "nilais",
+                        "matakuliah_id",
+                    )->where(function ($query) use ($mahasiswa) {
+                        return $query->where("mahasiswa_id", $mahasiswa->id);
+                    }),
+                ],
+                "nilai" => "required|string|max:5",
+            ],
+            [
+                "matakuliah_id.unique" =>
+                    "Mata kuliah ini sudah diambil oleh mahasiswa yang bersangkutan.",
+            ],
+        );
+
+        // Poin 13: Simpan data ke tabel nilais menggunakan method attach() milik belongsToMany
+        $mahasiswa->mataKuliah()->attach($request->matakuliah_id, [
+            "nilai" => $request->nilai,
+        ]);
+
+        // Poin 15: Redirect kembali ke halaman detail dengan flash message sukses
+        return redirect()
+            ->route("mahasiswa.detail", $id)
+            ->with("success", "Nilai mata kuliah berhasil ditambahkan!");
     }
 }

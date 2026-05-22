@@ -7,6 +7,7 @@ use App\Models\Jurusan; // Tambahkan import ini
 use App\Models\Mahasiswa; // Pastikan ini ada
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,13 +18,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Seeder bawaan untuk User
-        User::factory()->create([
-            "name" => "Test User",
-            "email" => "test@example.com",
-        ]);
+        // 1. Gunakan firstOrCreate untuk User agar tidak error UNIQUE saat seeder dijalankan ulang
+        User::firstOrCreate(
+            ["email" => "test@example.com"],
+            [
+                "name" => "Test User",
+                "password" => bcrypt("password"), // Berikan password default aman
+            ],
+        );
 
-        // 2. Buat data master Jurusan TERLEBIH DAHULU agar ID 1, 2, dan 3 tersedia
+        // 2. Data master Jurusan
         $ti = Jurusan::firstOrCreate(
             ["kode_jurusan" => "TI"],
             ["nama_jurusan" => "Teknik Informatika"],
@@ -39,23 +43,49 @@ class DatabaseSeeder extends Seeder
             ["nama_jurusan" => "Manajemen Informatika"],
         );
 
-        // 3. Buat data Mahasiswa dengan menghubungkannya ke jurusan_id (bukan kolom "jurusan")
-        Mahasiswa::create([
-            "nim" => "21010123",
-            "nama" => "Alex Utama",
-            "email" => "alex@mahasiswa.ac.id",
-            "jurusan_id" => $ti->id, // Menggunakan ID dari variabel jurusan TI di atas
-            "jenis_kelamin" => "L",
-            "alamat" => "Jl. Puspa Bangsa No. 12, Jakarta",
-        ]);
+        // 3. Data master Mata Kuliah (INI YANG SEBELUMNYA HILANG)
+        // Menggunakan updateOrInsert untuk mencegah error duplikasi data jika di-seed berkali-kali
+        DB::table("mata_kuliahs")->updateOrInsert(
+            ["kode_matkul" => "MK001"],
+            ["nama_matkul" => "Pemrograman Web Bergengsi", "sks" => 3],
+        );
 
-        Mahasiswa::create([
-            "nim" => "21010124",
-            "nama" => "Siti Aminah",
-            "email" => "siti@mahasiswa.ac.id",
-            "jurusan_id" => $si->id, // Menggunakan ID dari variabel jurusan SI di atas
-            "jenis_kelamin" => "P",
-            "alamat" => "Jl. Sudirman Kaveling 21, Jakarta",
-        ]);
+        DB::table("mata_kuliahs")->updateOrInsert(
+            ["kode_matkul" => "MK002"],
+            ["nama_matkul" => "Basis Data Lanjutan", "sks" => 4],
+        );
+
+        DB::table("mata_kuliahs")->updateOrInsert(
+            ["kode_matkul" => "MK003"],
+            ["nama_matkul" => "Rekayasa Perangkat Lunak", "sks" => 3],
+        );
+
+        DB::table("mata_kuliahs")->updateOrInsert(
+            ["kode_matkul" => "MK004"],
+            ["nama_matkul" => "Kecerdasan Buatan (AI)", "sks" => 3],
+        );
+
+        // 4. Data Mahasiswa (Gunakan updateOrInsert juga agar aman dijalankan berulang)
+        DB::table("mahasiswas")->updateOrInsert(
+            ["nim" => "21010123"],
+            [
+                "nama" => "Alex Utama",
+                "email" => "alex@mahasiswa.ac.id",
+                "jurusan_id" => $ti->id,
+                "jenis_kelamin" => "L",
+                "alamat" => "Jl. Puspa Bangsa No. 12, Jakarta",
+            ],
+        );
+
+        DB::table("mahasiswas")->updateOrInsert(
+            ["nim" => "21010124"],
+            [
+                "nama" => "Siti Aminah",
+                "email" => "siti@mahasiswa.ac.id",
+                "jurusan_id" => $si->id,
+                "jenis_kelamin" => "P",
+                "alamat" => "Jl. Sudirman Kaveling 21, Jakarta",
+            ],
+        );
     }
 }

@@ -29,20 +29,26 @@ cd uts-pemrograman-web
 # 2. Copy environment file
 cp .env.example .env
 
-# 3. Composer install
-composer install # or docker run --rm -v .:/app -w /app composer install
+# 3. Install dependencies via Composer
+# Jika punya Composer lokal:
+composer install
+# Jika via Docker:
+docker run --rm -v $(pwd):/app -w /app composer install
 
-# 3. Start containers
-just up # or docker compose up -d
+# 4. Jalankan Docker Containers
+just up
+# Alternatif tanpa just:
+docker compose up -d
 
-# 5. Generate app key & run migrations
-just artisan key:generate # you can use the normal php artisan command instead.
+# 5. Setup Aplikasi (Generate Key, Migrasi, & Seeder)
+just artisan key:generate
 just migrate
 just artisan db:seed
 
-# 6. Install JS dependencies & start Vite
-just install # you can use the normal npm command instead.
-just dev
+# Alternatif tanpa just (menjalankan perintah di dalam container):
+docker compose exec app php artisan key:generate
+docker compose exec app php artisan migrate
+docker compose exec app php artisan db:seed
 ```
 
 ## Common Commands

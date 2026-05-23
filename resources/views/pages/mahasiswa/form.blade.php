@@ -65,7 +65,6 @@
                                     class="w-full px-4 py-2 border @error('jurusan_id') border-red-400 focus:ring-red-100 @else border-gray-200 focus:ring-blue-100 focus:border-blue-500 @enderror rounded-lg focus:outline-none focus:ring-2 transition text-gray-800 bg-white">
                                 <option value="">-- Pilih Jurusan --</option>
 
-                                <!-- 2. Ganti value menjadi ID Angka (1, 2, 3) sesuai database yang sudah di-seed -->
                                 <option value="1" {{ old('jurusan_id') == '1' ? 'selected' : '' }}>Teknik Informatika (TI)</option>
                                 <option value="2" {{ old('jurusan_id') == '2' ? 'selected' : '' }}>Sistem Informasi (SI)</option>
                                 <option value="3" {{ old('jurusan_id') == '3' ? 'selected' : '' }}>Manajemen Informatika (MI)</option>

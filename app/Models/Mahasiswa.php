@@ -20,19 +20,13 @@ class Mahasiswa extends Model
         return $this->belongsTo(Jurusan::class, "jurusan_id");
     }
 
-    // Relasi ke Kartu Mahasiswa (One to One)
     public function kartuMahasiswa()
     {
-        // Sesuaikan 'App\Models\KartuMahasiswa' dengan nama class model kartu kamu
         return $this->hasOne(KartuMahasiswa::class, "mahasiswa_id");
     }
 
-    // Relasi ke Mata Kuliah (Many to Many)
-    // Di dalam file app/Models/Mahasiswa.php
-
     public function mataKuliah()
     {
-        // Pastikan parameter kedua eksplisit menyebut tabel 'nilais'
         return $this->belongsToMany(
             MataKuliah::class,
             "nilais",

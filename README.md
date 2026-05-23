@@ -7,7 +7,7 @@ A simple academic dashboard web application built as a course project for **Pemr
 | Layer     | Technology                        |
 |-----------|-----------------------------------|
 | Backend   | PHP 8.4, Laravel 13               |
-| Frontend  | Blade, Tailwind CSS 4, Vite 8     |
+| Frontend  | Blade, Tailwind CSS    |
 | Database  | Sqlite                         |
 | Dev Env   | Docker             |
 | Task Runner | Just                            |
@@ -38,6 +38,7 @@ just up # or docker compose up -d
 # 5. Generate app key & run migrations
 just artisan key:generate # you can use the normal php artisan command instead.
 just migrate
+just artisan db:seed
 
 # 6. Install JS dependencies & start Vite
 just install # you can use the normal npm command instead.

@@ -4,7 +4,6 @@
     </x-slot:title>
 
     <div class="max-w-6xl mx-auto">
-        <!-- Header -->
         <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 pb-6 border-b gap-4">
             <div>
                 <h2 class="text-3xl font-bold text-gray-900">Daftar Mahasiswa</h2>
@@ -33,7 +32,6 @@
             </div>
         @endif
 
-        <!-- Poin 4: Tombol Filter Berdasarkan Kode Jurusan -->
         <div class="flex flex-wrap gap-2 mb-6">
             <a href="{{ route('mahasiswa.list') }}"
                class="px-4 py-2 text-sm font-semibold rounded-lg border transition {{ !request('jurusan') ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50' }}">
@@ -65,7 +63,6 @@
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
                     <thead>
-                        <!-- Poin 1: No, NIM, Nama, Jurusan, No Kartu, Mata Kuliah, Aksi -->
                         <tr class="bg-gray-50 border-b border-gray-100">
                             <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-16 text-center">No</th>
                             <th class="px-6 py-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-32">NIM</th>
@@ -88,18 +85,14 @@
                                 <td class="px-6 py-4 font-medium text-gray-900">
                                     {{ $mahasiswa->nama }}
                                 </td>
-                                <!-- Poin 2: Eager loading Jurusan -->
                                 <td class="px-6 py-4">
                                     <span class="inline-flex px-2.5 py-1 rounded-md text-xs font-medium bg-blue-50 text-blue-800 border border-blue-100">
-                                        <!-- Memanggil nama_jurusan dari relasi Eloquent jurusan -->
                                         {{ $mahasiswa->jurusan->nama_jurusan ?? 'Tidak Diketahui' }}
                                     </span>
                                 </td>
-                                <!-- Poin 2: Eager loading No Kartu -->
                                 <td class="px-6 py-4 text-gray-600 font-mono text-xs">
                                     {{ $mahasiswa->kartuMahasiswa->no_kartu ?? 'Belum Ada Kartu' }}
                                 </td>
-                                <!-- Poin 3: Badge Mata Kuliah & Nilai -->
                                 <td class="px-6 py-4">
                                     <div class="flex flex-wrap gap-2.5 max-w-md">
                                         @forelse($mahasiswa->mataKuliah as $mk)
@@ -114,7 +107,6 @@
                                         @endforelse
                                     </div>
                                 </td>
-                                <!-- Poin 5: Tombol Detail pada setiap baris -->
                                 <td class="px-6 py-4 text-center">
                                     <a href="{{ route('mahasiswa.detail', $mahasiswa->id) }}"
                                        class="inline-flex items-center justify-center px-3 py-1.5 text-xs font-bold text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-md transition duration-150 border border-blue-200 shadow-sm">

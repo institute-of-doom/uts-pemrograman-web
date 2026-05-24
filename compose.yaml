@@ -5,6 +5,6 @@ services:
             - .:/app
         working_dir: /app
         ports:
-            - "8000:8000"
+            - "8888:8888"
             - "5173:5173"
-        command: php artisan serve --host=0.0.0.0 --port=8000
+        command: php artisan serve --host=0.0.0.0 --port=8888

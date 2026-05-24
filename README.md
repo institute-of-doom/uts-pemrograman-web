@@ -49,6 +49,10 @@ just artisan db:seed
 docker compose exec app php artisan key:generate
 docker compose exec app php artisan migrate
 docker compose exec app php artisan db:seed
+
+# Access the site
+# If this port is already in use on your machine, simply open the docker-compose.yml file and change the first number in the port sections
+http://localhost:8888/
 ```
 
 ## Common Commands

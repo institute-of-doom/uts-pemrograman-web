@@ -18,12 +18,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Gunakan firstOrCreate untuk User agar tidak error UNIQUE saat seeder dijalankan ulang
         User::firstOrCreate(
             ["email" => "test@example.com"],
             [
                 "name" => "Test User",
-                "password" => bcrypt("password"), // Berikan password default aman
+                "password" => bcrypt("password"),
             ],
         );
 
@@ -43,8 +42,6 @@ class DatabaseSeeder extends Seeder
             ["nama_jurusan" => "Manajemen Informatika"],
         );
 
-        // 3. Data master Mata Kuliah (INI YANG SEBELUMNYA HILANG)
-        // Menggunakan updateOrInsert untuk mencegah error duplikasi data jika di-seed berkali-kali
         DB::table("mata_kuliahs")->updateOrInsert(
             ["kode_matkul" => "MK001"],
             ["nama_matkul" => "Pemrograman Web Bergengsi", "sks" => 3],
@@ -65,7 +62,6 @@ class DatabaseSeeder extends Seeder
             ["nama_matkul" => "Kecerdasan Buatan (AI)", "sks" => 3],
         );
 
-        // 4. Data Mahasiswa (Gunakan updateOrInsert juga agar aman dijalankan berulang)
         DB::table("mahasiswas")->updateOrInsert(
             ["nim" => "21010123"],
             [
@@ -85,6 +81,17 @@ class DatabaseSeeder extends Seeder
                 "jurusan_id" => $si->id,
                 "jenis_kelamin" => "P",
                 "alamat" => "Jl. Sudirman Kaveling 21, Jakarta",
+            ],
+        );
+
+        DB::table("mahasiswas")->updateOrInsert(
+            ["nim" => "21010125"],
+            [
+                "nama" => "John Lennon",
+                "email" => "john@mahasiswa.ac.id",
+                "jurusan_id" => $si->id,
+                "jenis_kelamin" => "L",
+                "alamat" => "Jl. Abbey, Liverpool",
             ],
         );
     }

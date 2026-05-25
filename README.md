@@ -1,18 +1,17 @@
 # UTS Pemrograman Web
 
-A simple academic dashboard web application built as a course project for **Pemrograman Web Lanjut** (Advanced Web Programming) at STMIK Antar Bangsa. It demonstrates Laravel's MVC architecture, Blade templating, and modern frontend tooling.
+A comprehensive student management and academic dashboard web application built as a mid-term exam project (UTS) for **Pemrograman Web Lanjut** at STMIK Antar Bangsa. 
+
+The application demonstrates advanced Laravel concepts including Eloquent relationships, MVC architecture, interactive Blade component templating all optimized to run inside a lightweight containerized environment.
 
 ## Stack
 
-| Layer     | Technology                        |
-|-----------|-----------------------------------|
-| Backend   | PHP 8.4, Laravel 13               |
-| Frontend  | Blade, Tailwind CSS    |
-| Database  | Sqlite                         |
-| Dev Env   | Docker             |
-| Task Runner | Just                            |
-
-## Setup
+- Backend: PHP 8.4, Laravel 13
+- Frontend: Blade, Tailwind CSS
+- Database: SQlite
+- Dev Tools: Docker, Just
+- 
+## Getting Started
 
 ### Prerequisites
 
@@ -23,29 +22,29 @@ A simple academic dashboard web application built as a course project for **Pemr
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/Isvane/uts-pemrograman-web.git
+git clone https://github.com/institute-of-doom/uts-pemrograman-web.git
 cd uts-pemrograman-web
 
 # 2. Copy environment file
 cp .env.example .env
 
 # 3. Install dependencies via Composer
-# Jika punya Composer lokal:
+# Local composer install:
 composer install
-# Jika via Docker:
+# Using Docker:
 docker run --rm -v $(pwd):/app -w /app composer install
 
-# 4. Jalankan Docker Containers
+# 4. Run the Docker container
 just up
-# Alternatif tanpa just:
+# Alternative:
 docker compose up -d
 
-# 5. Setup Aplikasi (Generate Key, Migrasi, & Seeder)
+# 5. Setup (Generate Key, Migrasi, & Seeder)
 just artisan key:generate
 just migrate
 just artisan db:seed
 
-# Alternatif tanpa just (menjalankan perintah di dalam container):
+# Alternatively you can execute commands through Docker:
 docker compose exec app php artisan key:generate
 docker compose exec app php artisan migrate
 docker compose exec app php artisan db:seed
@@ -58,12 +57,10 @@ http://localhost:8888/
 ## Common Commands
 
 ```
-just up          # Start containers
-just stop        # Stop containers
-just destroy     # Tear down containers + volumes
-just migrate     # Run migrations
-just dev         # Start Vite dev server
-just build       # Build assets for production
-just shell       # Open shell in PHP container
-just artisan ... # Run any Artisan command
+just up             # Start containers
+just stop           # Stop containers
+just destroy        # Tear down containers + volumes
+just migrate        # Run migrations
+just shell          # Open shell in PHP container
+just artisan {args} # Run any Artisan command
 ```
